@@ -136,6 +136,18 @@ public class Game {
         });
     }
 
+    private void addBackground() {
+        Image image = new Image(BACKGROUND_3_PATH);
+        if (roads.equals("4")) {
+            image = new Image(BACKGROUND_4_PATH);
+        } else if (roads.equals("5")) {
+            image = new Image(BACKGROUND_5_PATH);
+        }
+        BackgroundImage backgroundImage = new BackgroundImage(image, null, null, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+        Background background = new Background(backgroundImage);
+        gamePane.setBackground(background);
+    }
+
     private void breakPopUP(final Button stopButton) {
         popup = new Popup();
         Label label = new Label();
@@ -308,16 +320,31 @@ public class Game {
         }
     }
 
-    private void createCat(int catX, int catY) {
-        cat = new ImageView(CAT_PATH);
-        if (!loadGame) {
-            cat.setLayoutX(290);
-            cat.setLayoutY(GAME_HEIGHT - 50);
-        } else {
-            cat.setLayoutX(catX);
-            cat.setLayoutY(catY);
+    private void isCollision(ImageView[] cars) {
+        for (int i = 0; i < cars.length; i++) {
+            if (cat.getLayoutX() < cars[i].getLayoutX() + 30 && cat.getLayoutX() + 20 > cars[i].getLayoutX() &&
+                    cat.getLayoutY() < cars[i].getLayoutY() + 20 && cat.getLayoutY() + 20 > cars[i].getLayoutY()) {
+                collisionEffect();
+            }
         }
-        gamePane.getChildren().add(cat);
+    }
+
+    private void collisionEffect() {
+        collision = new ImageView(COLLISION_PATH);
+        collision.setLayoutX(cat.getLayoutX());
+        collision.setLayoutY(cat.getLayoutY());
+        gamePane.getChildren().add(collision);
+
+        animationTimer.stop();
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                collision.setVisible(false);
+                animationTimer.start();
+                cat.setLayoutY(GAME_HEIGHT - 50);
+                breakTime += 1000;
+            }
+        }, 1000);
     }
 
     private int redCarsSpeedOnLevel() {
@@ -382,6 +409,18 @@ public class Game {
         timeLabel.setText("Time: " + gameTime);
     }
 
+    private void createCat(int catX, int catY) {
+        cat = new ImageView(CAT_PATH);
+        if (!loadGame) {
+            cat.setLayoutX(290);
+            cat.setLayoutY(GAME_HEIGHT - 50);
+        } else {
+            cat.setLayoutX(catX);
+            cat.setLayoutY(catY);
+        }
+        gamePane.getChildren().add(cat);
+    }
+
     private void catMovement() {
         if (isLeft && cat.getLayoutX() > 0 && cat.getLayoutY() > 30) {
             cat.setLayoutX(cat.getLayoutX() - 3);
@@ -404,45 +443,6 @@ public class Game {
         if (isRight&& cat.getLayoutX() > 203 && cat.getLayoutX() < 377 && cat.getLayoutY() < 30) {
             cat.setLayoutX(cat.getLayoutX() + 3);
         }
-    }
-
-    private void addBackground() {
-        Image image = new Image(BACKGROUND_3_PATH);
-        if (roads.equals("4")) {
-            image = new Image(BACKGROUND_4_PATH);
-        } else if (roads.equals("5")) {
-            image = new Image(BACKGROUND_5_PATH);
-        }
-        BackgroundImage backgroundImage = new BackgroundImage(image, null, null, BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
-        Background background = new Background(backgroundImage);
-        gamePane.setBackground(background);
-    }
-
-    private void isCollision(ImageView[] cars) {
-        for (int i = 0; i < cars.length; i++) {
-            if (cat.getLayoutX() < cars[i].getLayoutX() + 30 && cat.getLayoutX() + 20 > cars[i].getLayoutX() &&
-                    cat.getLayoutY() < cars[i].getLayoutY() + 20 && cat.getLayoutY() + 20 > cars[i].getLayoutY()) {
-                collisionEffect();
-            }
-        }
-    }
-
-    private void collisionEffect() {
-        collision = new ImageView(COLLISION_PATH);
-        collision.setLayoutX(cat.getLayoutX());
-        collision.setLayoutY(cat.getLayoutY());
-        gamePane.getChildren().add(collision);
-
-        animationTimer.stop();
-        new Timer().schedule(new TimerTask() {
-            @Override
-            public void run() {
-                collision.setVisible(false);
-                animationTimer.start();
-                cat.setLayoutY(GAME_HEIGHT - 50);
-                breakTime += 1000;
-            }
-        }, 1000);
     }
 
     private void endGame() {
