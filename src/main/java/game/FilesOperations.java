@@ -34,7 +34,9 @@ public class FilesOperations {
                 data.add(line);
             }
             bufferedReader.close();
-        } catch (Exception e) {
+        } catch (FileNotFoundException e) {
+            logger.error(e);
+        } catch (IOException e) {
             logger.error(e);
         }
         return data;
@@ -89,6 +91,8 @@ public class FilesOperations {
             } else {
                 data.add(read);
             }
+        } catch (FileNotFoundException e) {
+            logger.error(e);
         } catch (IOException e) {
             logger.error(e);
         }
