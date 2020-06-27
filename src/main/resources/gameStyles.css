@@ -1,0 +1,29 @@
+.button{
+    -fx-padding: 10px;
+    -fx-background-color: #03A9F4;
+    -fx-text-fill: #FFFFFF;
+    -fx-font-weight: bold;
+    -fx-text-alignment: center;
+}
+
+.button:hover{
+    -fx-background-color: #4FC3F7;
+}
+
+.label{
+    -fx-font-size: 13px;
+    -fx-text-fill: #FFFFFF;
+}
+
+#icon{
+    -fx-fill: #FFFFFF;
+}
+
+#popUpLabel{
+    -fx-background-color: #E1F5FE;
+}
+
+#stopButton{
+    -fx-padding: 4px;
+}
+
