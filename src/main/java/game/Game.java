@@ -33,6 +33,7 @@ public class Game {
     private static final String BACKGROUND_3_PATH = "roads3Background.png";
     private static final String BACKGROUND_4_PATH = "roads4Background.png";
     private static final String BACKGROUND_5_PATH = "roads5Background.png";
+    private static final String ICON_PATH = "icon.png";
 
     private Logger logger = Logger.getLogger(Game.class);
 
@@ -78,6 +79,7 @@ public class Game {
         gameStage.setScene(gameScene);
         gameStage.setResizable(false);
         gameStage.setTitle("Cross The Road");
+        gameStage.getIcons().add(new Image(ICON_PATH));
         gameScene.getStylesheets().add("gameStyles.css");
         createKeyListeners();
         randomPlace = new Random();

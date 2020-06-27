@@ -8,6 +8,7 @@ import javafx.stage.WindowEvent;
 import org.apache.log4j.Logger;
 
 public class Main extends Application {
+    private static final String ICON_PATH = "icon.png";
     private Logger logger = Logger.getLogger(Main.class);
 
     @Override
@@ -16,7 +17,7 @@ public class Main extends Application {
         scenes.setPrimaryStage(primaryStage);
         scenes.setMenuScene();
         primaryStage.setTitle("Cross The Road");
-        primaryStage.getIcons().add(new Image("icon.png"));
+        primaryStage.getIcons().add(new Image(ICON_PATH));
         primaryStage.setResizable(false);
         primaryStage.show();
         primaryStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
