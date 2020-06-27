@@ -15,17 +15,19 @@ public class CreateXls {
     private Logger logger = Logger.getLogger(CreateXls.class);
     private FilesOperations filesOperations = new FilesOperations();
 
-    public void saveXls() {
+    public boolean saveXls() {
         HSSFWorkbook scoresWorkbook = new HSSFWorkbook();
         HSSFSheet firstSheet = scoresWorkbook.createSheet("SCORES");
         addHeader(firstSheet);
         addScores(firstSheet);
+        boolean created = false;
 
         try{
             FileOutputStream fileOutputStream = new FileOutputStream(new File("scores.xls"));
             scoresWorkbook.write(fileOutputStream);
             scoresWorkbook.close();
             fileOutputStream.close();
+            created = true;
             logger.info("Scores saved to scores.xls");
         } catch (FileNotFoundException e) {
             logger.error(e);
@@ -33,6 +35,7 @@ public class CreateXls {
             logger.error(e);
         }
 
+        return created;
     }
 
     private void addHeader(HSSFSheet firstSheet){

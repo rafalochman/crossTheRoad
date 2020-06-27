@@ -2,6 +2,7 @@ package game;
 
 import de.jensd.fx.glyphs.GlyphsDude;
 import de.jensd.fx.glyphs.fontawesome.FontAwesomeIcon;
+import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
@@ -11,6 +12,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
+import javafx.util.Duration;
 
 import java.util.List;
 
@@ -114,7 +116,7 @@ public class Scores extends AnchorPane {
     }
 
     private void createButtonCreatePdf() {
-        Button saveToPdfButton = new Button();
+        final Button saveToPdfButton = new Button();
         saveToPdfButton.setLayoutX(120);
         saveToPdfButton.setLayoutY(400);
         saveToPdfButton.setText("SAVE SCORES TO PDF");
@@ -125,13 +127,18 @@ public class Scores extends AnchorPane {
 
         saveToPdfButton.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
-                createPdf.savePdf();
+                if(createPdf.savePdf()){
+                    setButtonColor(saveToPdfButton,"-fx-background-color: lightgreen");
+                }
+                else {
+                    setButtonColor(saveToPdfButton,"-fx-background-color: red");
+                }
             }
         });
     }
 
     private void createButtonCreateXls() {
-        Button saveToXlsButton = new Button();
+        final Button saveToXlsButton = new Button();
         saveToXlsButton.setLayoutX(320);
         saveToXlsButton.setLayoutY(400);
         saveToXlsButton.setText("SAVE SCORES TO XLS");
@@ -142,9 +149,26 @@ public class Scores extends AnchorPane {
 
         saveToXlsButton.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
-                createXls.saveXls();
+                if(createXls.saveXls()){
+                    setButtonColor(saveToXlsButton,"-fx-background-color: lightgreen");
+                }
+                else {
+                    setButtonColor(saveToXlsButton,"-fx-background-color: red");
+                }
             }
         });
+    }
+
+
+    private void setButtonColor(final Button button, String style){
+        button.setStyle(style);
+        PauseTransition pause = new PauseTransition(Duration.seconds(0.5));
+        pause.setOnFinished(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent event) {
+                button.setStyle(null);
+            }
+        });
+        pause.play();
     }
 
 }
