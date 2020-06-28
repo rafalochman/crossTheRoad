@@ -127,11 +127,10 @@ public class Scores extends AnchorPane {
 
         saveToPdfButton.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
-                if(createPdf.savePdf()){
-                    setButtonColor(saveToPdfButton,"-fx-background-color: lightgreen");
-                }
-                else {
-                    setButtonColor(saveToPdfButton,"-fx-background-color: red");
+                if (createPdf.savePdf()) {
+                    setButtonColor(saveToPdfButton, "-fx-background-color: lightgreen");
+                } else {
+                    setButtonColor(saveToPdfButton, "-fx-background-color: red");
                 }
             }
         });
@@ -149,18 +148,16 @@ public class Scores extends AnchorPane {
 
         saveToXlsButton.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
-                if(createXls.saveXls()){
-                    setButtonColor(saveToXlsButton,"-fx-background-color: lightgreen");
-                }
-                else {
-                    setButtonColor(saveToXlsButton,"-fx-background-color: red");
+                if (createXls.saveXls()) {
+                    setButtonColor(saveToXlsButton, "-fx-background-color: lightgreen");
+                } else {
+                    setButtonColor(saveToXlsButton, "-fx-background-color: red");
                 }
             }
         });
     }
 
-
-    private void setButtonColor(final Button button, String style){
+    private void setButtonColor(final Button button, String style) {
         button.setStyle(style);
         PauseTransition pause = new PauseTransition(Duration.seconds(0.5));
         pause.setOnFinished(new EventHandler<ActionEvent>() {

@@ -198,13 +198,13 @@ public class Game {
         animationTimer.stop();
     }
 
-    private void saveGame(){
+    private void saveGame() {
         GameParameters gameParameters = new GameParameters();
         gameParameters.setRoads(roads);
         gameParameters.setLevel(level);
         gameParameters.setLogin(login);
-        gameParameters.setCatX((int)cat.getLayoutX());
-        gameParameters.setCatY((int)cat.getLayoutY());
+        gameParameters.setCatX((int) cat.getLayoutX());
+        gameParameters.setCatY((int) cat.getLayoutY());
         gameParameters.setStoppedTime(actualGameTime);
         gameParameters.setLoadGame(false);
         filesOperations.saveGame(gameParameters);
@@ -442,7 +442,7 @@ public class Game {
         if (isLeft && cat.getLayoutX() > 206 && cat.getLayoutX() < 380 && cat.getLayoutY() < 30) {
             cat.setLayoutX(cat.getLayoutX() - 3);
         }
-        if (isRight&& cat.getLayoutX() > 203 && cat.getLayoutX() < 377 && cat.getLayoutY() < 30) {
+        if (isRight && cat.getLayoutX() > 203 && cat.getLayoutX() < 377 && cat.getLayoutY() < 30) {
             cat.setLayoutX(cat.getLayoutX() + 3);
         }
     }

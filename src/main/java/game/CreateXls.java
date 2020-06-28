@@ -22,7 +22,7 @@ public class CreateXls {
         addScores(firstSheet);
         boolean created = false;
 
-        try{
+        try {
             FileOutputStream fileOutputStream = new FileOutputStream(new File("scores.xls"));
             scoresWorkbook.write(fileOutputStream);
             scoresWorkbook.close();
@@ -38,7 +38,7 @@ public class CreateXls {
         return created;
     }
 
-    private void addHeader(HSSFSheet firstSheet){
+    private void addHeader(HSSFSheet firstSheet) {
         HSSFRow row = firstSheet.createRow(0);
         row.createCell(0).setCellValue("Login");
         row.createCell(1).setCellValue("Time");
@@ -47,7 +47,7 @@ public class CreateXls {
         row.createCell(4).setCellValue("Date");
     }
 
-    private void addScores(HSSFSheet firstSheet){
+    private void addScores(HSSFSheet firstSheet) {
         List<String> data = filesOperations.loadScores();
         int rowCounter = 1;
         for (int i = data.size(); i > 0; i--) {

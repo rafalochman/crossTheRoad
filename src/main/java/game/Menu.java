@@ -37,7 +37,7 @@ public class Menu extends AnchorPane {
         }
     }
 
-    private void addTitle(){
+    private void addTitle() {
         Label titleLabel = new Label("CROSS THE ROAD");
         titleLabel.setLayoutX(150);
         titleLabel.setLayoutY(30);
