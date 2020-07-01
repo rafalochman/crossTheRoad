@@ -15,6 +15,8 @@ public class ScoreData {
         this.date = date;
     }
 
+    //in ScoreData, scores table, java api requires methods:
+
     public String getLogin() {
         return login;
     }
