@@ -22,7 +22,6 @@ public class Menu extends AnchorPane {
         createButtonScores();
         createButtonEnd();
         addTitle();
-
         filesOperations = new FilesOperations();
         logger.info("application started");
     }
@@ -88,8 +87,7 @@ public class Menu extends AnchorPane {
     }
 
     private void createButtonScores() {
-        Button scoresButton;
-        scoresButton = new Button();
+        Button scoresButton = new Button();
         scoresButton.setLayoutX(280);
         scoresButton.setLayoutY(350);
         scoresButton.setText("SCORES");
