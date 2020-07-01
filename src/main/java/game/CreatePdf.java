@@ -22,7 +22,8 @@ public class CreatePdf {
         DateFormat dateFormat = new SimpleDateFormat("H:m dd/MM/yyyy");
         Date date = new Date();
         Document document = new Document(PageSize.A4, 50, 50, 50, 50);
-        boolean created = false;
+        boolean created;
+        created = false;
 
         try {
             PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream("scores.pdf"));

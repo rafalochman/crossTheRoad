@@ -20,7 +20,8 @@ public class CreateXls {
         HSSFSheet firstSheet = scoresWorkbook.createSheet("SCORES");
         addHeader(firstSheet);
         addScores(firstSheet);
-        boolean created = false;
+        boolean created;
+        created = false;
 
         try {
             FileOutputStream fileOutputStream = new FileOutputStream(new File("scores.xls"));
