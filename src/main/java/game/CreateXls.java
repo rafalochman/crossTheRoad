@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.util.List;
 
 public class CreateXls {
-    private Logger logger = Logger.getLogger(CreateXls.class);
+    private final Logger logger = Logger.getLogger(CreateXls.class);
     private FilesOperations filesOperations = new FilesOperations();
 
     public boolean saveXls() {

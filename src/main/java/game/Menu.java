@@ -10,7 +10,7 @@ import org.apache.log4j.Logger;
 import java.util.List;
 
 public class Menu extends AnchorPane {
-    private Logger logger = Logger.getLogger(Menu.class);
+    private final Logger logger = Logger.getLogger(Menu.class);
     private Scenes scenes;
     private Button resumeButton;
     private FilesOperations filesOperations;

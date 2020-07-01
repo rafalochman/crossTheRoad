@@ -8,8 +8,8 @@ import javafx.stage.WindowEvent;
 import org.apache.log4j.Logger;
 
 public class Main extends Application {
+    private final Logger logger = Logger.getLogger(Main.class);
     private static final String ICON_PATH = "icon.png";
-    private Logger logger = Logger.getLogger(Main.class);
 
     @Override
     public void start(Stage primaryStage) {

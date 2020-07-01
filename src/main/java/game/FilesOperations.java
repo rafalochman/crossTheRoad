@@ -9,7 +9,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class FilesOperations {
-    private Logger logger = Logger.getLogger(FilesOperations.class);
+    private final Logger logger = Logger.getLogger(FilesOperations.class);
     private static final String SCORES_PATH = "scores.txt";
     private static final String SAVE_GAME_PATH = "save.json";
 

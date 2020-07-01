@@ -9,7 +9,7 @@ import javafx.scene.layout.AnchorPane;
 import org.apache.log4j.Logger;
 
 public class Start extends AnchorPane {
-    private Logger logger = Logger.getLogger(Start.class);
+    private final Logger logger = Logger.getLogger(Start.class);
     private Scenes scenes;
     private FilesOperations filesOperations;
     private String login;

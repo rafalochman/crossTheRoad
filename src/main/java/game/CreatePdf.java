@@ -14,7 +14,7 @@ import java.util.Date;
 import java.util.List;
 
 public class CreatePdf {
-    private Logger logger = Logger.getLogger(CreatePdf.class);
+    private final Logger logger = Logger.getLogger(CreatePdf.class);
     private FilesOperations filesOperations = new FilesOperations();
     private PdfPTable pdfPTable;
 

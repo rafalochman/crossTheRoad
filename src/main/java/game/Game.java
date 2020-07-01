@@ -24,6 +24,8 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class Game {
+    private final Logger logger = Logger.getLogger(Game.class);
+
     private static final int GAME_WIDTH = 600;
     private static final int GAME_HEIGHT = 800;
     private static final String RED_CAR_PATH = "redCar.png";
@@ -34,8 +36,6 @@ public class Game {
     private static final String BACKGROUND_4_PATH = "roads4Background.png";
     private static final String BACKGROUND_5_PATH = "roads5Background.png";
     private static final String ICON_PATH = "icon.png";
-
-    private Logger logger = Logger.getLogger(Game.class);
 
     private AnchorPane gamePane;
     private Scene gameScene;
