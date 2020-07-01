@@ -12,7 +12,11 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.*;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundSize;
 import javafx.scene.text.Text;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
@@ -306,26 +310,26 @@ public class Game {
     }
 
     private void carsDriving(ImageView[] cars, int speed) {
-        for (int i = 0; i < cars.length; i++) {
-            cars[i].setLayoutX(cars[i].getLayoutX() + speed);
+        for (ImageView car : cars) {
+            car.setLayoutX(car.getLayoutX() + speed);
         }
     }
 
     private void keepCarsInGame(ImageView[] cars, boolean direction) {
-        for (int i = 0; i < cars.length; i++) {
-            if (cars[i].getLayoutX() > 620 && direction) {
-                cars[i].setLayoutX(-20);
+        for (ImageView car : cars) {
+            if (car.getLayoutX() > 620 && direction) {
+                car.setLayoutX(-20);
             }
-            if (cars[i].getLayoutX() < -20 && !direction) {
-                cars[i].setLayoutX(620);
+            if (car.getLayoutX() < -20 && !direction) {
+                car.setLayoutX(620);
             }
         }
     }
 
     private void isCollision(ImageView[] cars) {
-        for (int i = 0; i < cars.length; i++) {
-            if (cat.getLayoutX() < cars[i].getLayoutX() + 30 && cat.getLayoutX() + 20 > cars[i].getLayoutX() &&
-                    cat.getLayoutY() < cars[i].getLayoutY() + 20 && cat.getLayoutY() + 20 > cars[i].getLayoutY()) {
+        for (ImageView car : cars) {
+            if (cat.getLayoutX() < car.getLayoutX() + 30 && cat.getLayoutX() + 20 > car.getLayoutX() &&
+                    cat.getLayoutY() < car.getLayoutY() + 20 && cat.getLayoutY() + 20 > car.getLayoutY()) {
                 collisionEffect();
             }
         }
