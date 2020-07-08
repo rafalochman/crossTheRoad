@@ -68,7 +68,7 @@ public class Menu extends AnchorPane {
         resumeButton.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent event) {
                 List<String> data = filesOperations.loadGame();
-                if (!data.get(0).equals("null")) {
+                if (!data.get(0).equals("empty")) {
                     scenes.hide();
                     GameParameters gameParameters = new GameParameters();
                     gameParameters.setRoads(data.get(0));

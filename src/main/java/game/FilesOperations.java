@@ -72,7 +72,7 @@ public class FilesOperations {
     public void deleteGameSave() {
         try {
             FileWriter file = new FileWriter(SAVE_GAME_PATH);
-            file.write("null");
+            file.write("empty");
             file.close();
         } catch (IOException e) {
             logger.error(e);
@@ -82,19 +82,20 @@ public class FilesOperations {
     public List<String> loadGame() {
         String read;
         List<String> data = new ArrayList<String>();
-        data.add("null");
+        data.add("empty");
         JSONObject jsonData = new JSONObject();
         try {
             FileReader file = new FileReader(SAVE_GAME_PATH);
             Scanner reader = new Scanner(file);
             read = reader.nextLine();
-            if (!read.equals("null")) {
-                jsonData = new JSONObject(read);
-            }
             reader.close();
             file.close();
 
-            if (!read.equals("null")) {
+            if (!read.equals("empty")) {
+                jsonData = new JSONObject(read);
+            }
+
+            if (!read.equals("empty")) {
                 data = new ArrayList<String>(Arrays.asList(jsonData.get("ROADS").toString(), jsonData.get("LEVEL").toString(), jsonData.get("LOGIN").toString(), jsonData.get("CATX").toString(),
                         jsonData.get("CATY").toString(), jsonData.get("TIME").toString()));
             } else {

@@ -35,7 +35,7 @@ public class Scenes {
 
         FilesOperations filesOperations = new FilesOperations();
         List<String> data = filesOperations.loadGame();
-        if (data.get(0).equals("null")) {
+        if (data.get(0).equals("empty")) {
             menuPane.updateResumeButton(true);
         } else {
             menuPane.updateResumeButton(false);
