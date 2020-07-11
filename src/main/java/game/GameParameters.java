@@ -64,5 +64,4 @@ public class GameParameters {
     public boolean getLoadGame() {
         return loadGame;
     }
-
 }
