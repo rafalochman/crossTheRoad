@@ -1,7 +1,6 @@
 # crossTheRoad
-Gra Cross the road.
 
-##Opis gry 
+## Opis gry 
 
 Gra Cross the road polega na przejściu całej planszy w jak najkrótszym czasie. Gracz steruje kotem, który początkowo znajduje się na dole planszy. Gracz musi poruszać się w taki sposób, aby ominąć jadące samochody, ponieważ po uderzeniu w samochód powraca się do punktu startu. 
 Do wyboru są trzy poziomy trudności – easy, medium, hard, które różnią się od siebie ilością samochodów na drogach, kierunkiem oraz prędkością jazdy samochodów. Można również wybrać ilość dróg do pokonania – 3, 4 lub 5. 
