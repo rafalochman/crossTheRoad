@@ -39,7 +39,7 @@ public class Scores extends AnchorPane {
     public void fillTable() {
         tableView.getItems().clear();
         List<String> data = filesOperations.loadScores();
-        if (data.size() > 1) {
+        if (data.size() >= 1) {
             for (int i = data.size(); i > 0; i--) {
                 String[] dataArray = data.get(i - 1).split(" ");
                 tableView.getItems().add(new ScoreData(dataArray[0], dataArray[1], dataArray[3], dataArray[2], dataArray[4]));
