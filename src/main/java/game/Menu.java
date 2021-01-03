@@ -11,9 +11,9 @@ import java.util.List;
 
 public class Menu extends AnchorPane {
     private final Logger logger = Logger.getLogger(Menu.class);
-    private Scenes scenes;
+    private final Scenes scenes;
     private Button resumeButton;
-    private FilesOperations filesOperations;
+    private final FilesOperations filesOperations;
 
     public Menu(Scenes scenes) {
         this.scenes = scenes;

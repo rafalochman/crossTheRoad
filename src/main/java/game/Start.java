@@ -15,8 +15,8 @@ import org.apache.log4j.Logger;
 
 public class Start extends AnchorPane {
     private final Logger logger = Logger.getLogger(Start.class);
-    private Scenes scenes;
-    private FilesOperations filesOperations;
+    private final Scenes scenes;
+    private final FilesOperations filesOperations;
     private String login;
     private String roads;
     private String level;

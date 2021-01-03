@@ -17,11 +17,11 @@ import javafx.util.Duration;
 import java.util.List;
 
 public class Scores extends AnchorPane {
-    private Scenes scenes;
-    private FilesOperations filesOperations;
-    private CreatePdf createPdf;
-    private CreateXls createXls;
-    private TableView<ScoreData> tableView;
+    private final Scenes scenes;
+    private final FilesOperations filesOperations;
+    private final CreatePdf createPdf;
+    private final CreateXls createXls;
+    private final TableView<ScoreData> tableView;
 
     public Scores(Scenes scenes) {
         this.scenes = scenes;

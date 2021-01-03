@@ -8,11 +8,11 @@ import java.util.List;
 public class Scenes {
     private static final int SCENE_SIZE = 600;
     private Stage primaryStage;
-    private Menu menuPane;
-    private Scores scoresPane;
-    private Scene menuScene;
-    private Scene startScene;
-    private Scene scoresScene;
+    private final Menu menuPane;
+    private final Scores scoresPane;
+    private final Scene menuScene;
+    private final Scene startScene;
+    private final Scene scoresScene;
 
     public Scenes() {
         Start startPane = new Start(this);
@@ -35,11 +35,7 @@ public class Scenes {
 
         FilesOperations filesOperations = new FilesOperations();
         List<String> data = filesOperations.loadGame();
-        if (data.get(0).equals("empty")) {
-            menuPane.updateResumeButton(true);
-        } else {
-            menuPane.updateResumeButton(false);
-        }
+        menuPane.updateResumeButton(data.get(0).equals("empty"));
     }
 
     public void setStartScene() {

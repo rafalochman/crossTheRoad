@@ -20,7 +20,7 @@ import java.util.List;
 
 public class CreatePdf {
     private final Logger logger = Logger.getLogger(CreatePdf.class);
-    private FilesOperations filesOperations = new FilesOperations();
+    private final FilesOperations filesOperations = new FilesOperations();
     private PdfPTable pdfPTable;
 
     public boolean savePdf() {

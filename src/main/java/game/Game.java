@@ -10,8 +10,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
@@ -41,24 +39,20 @@ public class Game {
     private static final String BACKGROUND_5_PATH = "roads5Background.png";
     private static final String ICON_PATH = "icon.png";
 
-    private AnchorPane gamePane;
-    private Scene gameScene;
-    private Stage gameStage;
-
-    private boolean isLeft;
-    private boolean isRight;
-    private boolean isUp;
-    private boolean isDown;
+    private final AnchorPane gamePane;
+    private final Scene gameScene;
+    private final Stage gameStage;
 
     private String roads;
     private String level;
     private String login;
 
     private AnimationTimer animationTimer;
-    private ImageView cat;
+    private Cat cat;
     private Label timeLabel;
-    private ImageView[] redCars;
-    private ImageView[] purpleCars;
+    private Car[] redCars;
+    private Car[] purpleCars;
+    private CarsParameters carsParameters;
     private Random randomPlace;
     private ImageView collision;
 
@@ -72,8 +66,8 @@ public class Game {
     private boolean loadGame;
     private Popup popup;
 
-    private Scenes scenes;
-    private FilesOperations filesOperations;
+    private final Scenes scenes;
+    private final FilesOperations filesOperations;
 
     public Game(Scenes scenes) {
         this.scenes = scenes;
@@ -85,7 +79,6 @@ public class Game {
         gameStage.setTitle("Cross The Road");
         gameStage.getIcons().add(new Image(ICON_PATH));
         gameScene.getStylesheets().add("gameStyles.css");
-        createKeyListeners();
         randomPlace = new Random();
         filesOperations = new FilesOperations();
         gameStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
@@ -107,39 +100,10 @@ public class Game {
         createAnimations();
         addBackground();
         createCars();
+        carsParameters = new CarsParameters(level);
         createTimeLabel();
         createStopButton();
         startTime = System.currentTimeMillis();
-    }
-
-    private void createKeyListeners() {
-        gameScene.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            public void handle(KeyEvent event) {
-                if (event.getCode() == KeyCode.LEFT) {
-                    isLeft = true;
-                } else if (event.getCode() == KeyCode.RIGHT) {
-                    isRight = true;
-                } else if (event.getCode() == KeyCode.UP) {
-                    isUp = true;
-                } else if (event.getCode() == KeyCode.DOWN) {
-                    isDown = true;
-                }
-            }
-        });
-
-        gameScene.setOnKeyReleased(new EventHandler<KeyEvent>() {
-            public void handle(KeyEvent event) {
-                if (event.getCode() == KeyCode.LEFT) {
-                    isLeft = false;
-                } else if (event.getCode() == KeyCode.RIGHT) {
-                    isRight = false;
-                } else if (event.getCode() == KeyCode.UP) {
-                    isUp = false;
-                } else if (event.getCode() == KeyCode.DOWN) {
-                    isDown = false;
-                }
-            }
-        });
     }
 
     private void addBackground() {
@@ -245,89 +209,74 @@ public class Game {
         int[] layoutYTemporary = new int[10];
 
         if (roads.equals("3")) {
-            redCars = new ImageView[9];
-            purpleCars = new ImageView[9];
+            redCars = new Car[9];
+            purpleCars = new Car[9];
             layoutYTemporary = layoutYFor3Roads;
         } else if (roads.equals("4")) {
-            redCars = new ImageView[12];
-            purpleCars = new ImageView[12];
+            redCars = new Car[12];
+            purpleCars = new Car[12];
             layoutYTemporary = layoutYFor4Roads;
         } else if (roads.equals("5")) {
-            redCars = new ImageView[15];
-            purpleCars = new ImageView[15];
+            redCars = new Car[15];
+            purpleCars = new Car[15];
             layoutYTemporary = layoutYFor5Roads;
         }
 
-        int[] parameters;
-
         for (int i = 0; i < 3; i++) {
-            parameters = new int[]{layoutYTemporary[0], 0, i};
-            carsLane(redCars, parameters, RED_CAR_PATH);
-            parameters[0] = layoutYTemporary[1];
-            carsLane(purpleCars, parameters, PURPLE_CAR_PATH);
+            createCarsLane(layoutYTemporary, i, 1, 0);
         }
 
         for (int i = 3; i < 6; i++) {
-            parameters = new int[]{layoutYTemporary[2], 3, i};
-            carsLane(redCars, parameters, RED_CAR_PATH);
-            parameters[0] = layoutYTemporary[3];
-            carsLane(purpleCars, parameters, PURPLE_CAR_PATH);
+            createCarsLane(layoutYTemporary, i, 3, 3);
         }
 
         for (int i = 6; i < 9; i++) {
-            parameters = new int[]{layoutYTemporary[4], 6, i};
-            carsLane(redCars, parameters, RED_CAR_PATH);
-            parameters[0] = layoutYTemporary[5];
-            carsLane(purpleCars, parameters, PURPLE_CAR_PATH);
+            createCarsLane(layoutYTemporary, i, 5, 6);
         }
 
         if (roads.equals("4") || roads.equals("5")) {
             for (int i = 9; i < 12; i++) {
-                parameters = new int[]{layoutYTemporary[6], 9, i};
-                carsLane(redCars, parameters, RED_CAR_PATH);
-                parameters[0] = layoutYTemporary[7];
-                carsLane(purpleCars, parameters, PURPLE_CAR_PATH);
+                createCarsLane(layoutYTemporary, i, 7, 9);
             }
         }
 
         if (roads.equals("5")) {
             for (int i = 12; i < 15; i++) {
-                parameters = new int[]{layoutYTemporary[8], 12, i};
-                carsLane(redCars, parameters, RED_CAR_PATH);
-                parameters[0] = layoutYTemporary[9];
-                carsLane(purpleCars, parameters, PURPLE_CAR_PATH);
+                createCarsLane(layoutYTemporary, i, 9, 12);
             }
         }
-
     }
 
-    private void carsLane(ImageView[] cars, int[] parameters, String path) {
+    private void createCarsLane(int[] layoutYTemporary, int i, int step, int point) {
+        int[] parameters;
+        parameters = new int[]{layoutYTemporary[step - 1], point, i};
+        carsLane(redCars, parameters, RED_CAR_PATH);
+        parameters[0] = layoutYTemporary[step];
+        carsLane(purpleCars, parameters, PURPLE_CAR_PATH);
+    }
+
+    private void carsLane(Car[] cars, int[] parameters, String path) {
         randomPlace = new Random();
-        cars[parameters[2]] = new ImageView(path);
+        cars[parameters[2]] = new Car(path);
         cars[parameters[2]].setLayoutX(randomPlace.nextInt(170) + (parameters[2] - parameters[1]) * 215);
         cars[parameters[2]].setLayoutY(parameters[0]);
         gamePane.getChildren().add(cars[parameters[2]]);
     }
 
-    private void carsDriving(ImageView[] cars, int speed) {
-        for (ImageView car : cars) {
-            car.setLayoutX(car.getLayoutX() + speed);
+    private void carsDriving(Car[] cars, int speed) {
+        for (Car car : cars) {
+            car.drive(speed);
         }
     }
 
-    private void keepCarsInGame(ImageView[] cars, boolean direction) {
-        for (ImageView car : cars) {
-            if (car.getLayoutX() > 620 && direction) {
-                car.setLayoutX(-20);
-            }
-            if (car.getLayoutX() < -20 && !direction) {
-                car.setLayoutX(620);
-            }
+    private void keepCarsInGame(Car[] cars, boolean direction) {
+        for (Car car : cars) {
+            car.keepInGame(direction);
         }
     }
 
-    private void isCollision(ImageView[] cars) {
-        for (ImageView car : cars) {
+    private void isCollision(Car[] cars) {
+        for (Car car : cars) {
             if (cat.getLayoutX() < car.getLayoutX() + 30 && cat.getLayoutX() + 20 > car.getLayoutX() &&
                     cat.getLayoutY() < car.getLayoutY() + 20 && cat.getLayoutY() + 20 > car.getLayoutY()) {
                 collisionEffect();
@@ -353,47 +302,15 @@ public class Game {
         }, 1000);
     }
 
-    private int redCarsSpeedOnLevel() {
-        if (level.equals("easy")) {
-            return 3;
-        }
-        if (level.equals("medium")) {
-            return 3;
-        }
-        if (level.equals("hard")) {
-            return 4;
-        } else {
-            return 0;
-        }
-    }
-
-    private int purpleCarsSpeedOnLevel() {
-        if (level.equals("easy")) {
-            return 3;
-        }
-        if (level.equals("medium")) {
-            return -3;
-        }
-        if (level.equals("hard")) {
-            return -4;
-        } else {
-            return 0;
-        }
-    }
-
-    private boolean keepPurpleCarsOnLevel() {
-        return level.equals("easy");
-    }
-
     private void createAnimations() {
         animationTimer = new AnimationTimer() {
             @Override
             public void handle(long now) {
-                catMovement();
-                carsDriving(redCars, redCarsSpeedOnLevel());
-                carsDriving(purpleCars, purpleCarsSpeedOnLevel());
+                cat.catMovement();
+                carsDriving(redCars, carsParameters.getRedCarsSpeed());
+                carsDriving(purpleCars, carsParameters.getPurpleCarsSpeed());
                 keepCarsInGame(redCars, true);
-                keepCarsInGame(purpleCars, keepPurpleCarsOnLevel());
+                keepCarsInGame(purpleCars, carsParameters.getPurpleCarsDirection());
                 isCollision(redCars);
                 isCollision(purpleCars);
                 updateTime();
@@ -416,7 +333,8 @@ public class Game {
     }
 
     private void createCat(int catX, int catY) {
-        cat = new ImageView(CAT_PATH);
+        cat = new Cat(CAT_PATH, gameScene);
+        cat.createKeyListeners();
         if (!loadGame) {
             cat.setLayoutX(290);
             cat.setLayoutY(GAME_HEIGHT - 50);
@@ -425,30 +343,6 @@ public class Game {
             cat.setLayoutY(catY);
         }
         gamePane.getChildren().add(cat);
-    }
-
-    private void catMovement() {
-        if (isLeft && cat.getLayoutX() > 0 && cat.getLayoutY() > 30) {
-            cat.setLayoutX(cat.getLayoutX() - 3);
-        }
-        if (isRight && cat.getLayoutX() < 590 && cat.getLayoutY() > 30) {
-            cat.setLayoutX(cat.getLayoutX() + 3);
-        }
-        if (isUp && cat.getLayoutY() > 35) {
-            cat.setLayoutY(cat.getLayoutY() - 3);
-        }
-        if (isDown && cat.getLayoutY() < 750) {
-            cat.setLayoutY(cat.getLayoutY() + 3);
-        }
-        if (isUp && cat.getLayoutY() > 0 && cat.getLayoutX() < 380 && cat.getLayoutX() > 203) {
-            cat.setLayoutY(cat.getLayoutY() - 3);
-        }
-        if (isLeft && cat.getLayoutX() > 206 && cat.getLayoutX() < 380 && cat.getLayoutY() < 30) {
-            cat.setLayoutX(cat.getLayoutX() - 3);
-        }
-        if (isRight && cat.getLayoutX() > 203 && cat.getLayoutX() < 377 && cat.getLayoutY() < 30) {
-            cat.setLayoutX(cat.getLayoutX() + 3);
-        }
     }
 
     private void endGame() {

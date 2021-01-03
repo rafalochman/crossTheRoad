@@ -13,7 +13,7 @@ import java.util.List;
 
 public class CreateXls {
     private final Logger logger = Logger.getLogger(CreateXls.class);
-    private FilesOperations filesOperations = new FilesOperations();
+    private final FilesOperations filesOperations = new FilesOperations();
 
     public boolean saveXls() {
         HSSFWorkbook scoresWorkbook = new HSSFWorkbook();
