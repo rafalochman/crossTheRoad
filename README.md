@@ -2,7 +2,7 @@
 Cross The Road is a desktop game. Player has to control a cat to cross all the roads in the shortest time. Game has three difficulty levels and three possible roads number configurations. Application offers gamme saving and loading, saving scores to pdf and xls files.
 
 ## Technologies
-* Java 1.8
+* Java 8
 * JavaFX
 * CSS
 * Maven
